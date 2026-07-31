@@ -1,0 +1,348 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Fantasy Time · TI 2026</title>
+  <script src="runtime-config.js?v=public-mode-v1"></script>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=visual-v1">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=visual-v1">
+  <link rel="preload" as="image" href="assets/ti2026/backgrounds/fantasy-stage.webp" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css?v=sticky-role-table-v2">
+  <link rel="stylesheet" href="ux-v2.css?v=profile-emblems-v5">
+  <link rel="stylesheet" href="live.css?v=development-banner-v1">
+  <link rel="stylesheet" href="public.css?v=project-telegram-v5">
+  <link rel="stylesheet" href="fantasy-builder.css?v=portrait-frame-v7">
+</head>
+<body class="ux-v2" data-design-mode="match-center">
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#my-team">
+      <span class="brand-mark">
+        <img src="assets/fantasy-time-mark.png?v=public-brand-v1" alt="" width="36" height="36">
+      </span>
+      <span>
+        <strong>Fantasy Time</strong>
+        <small>TI 2026 analytics</small>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label="Основная навигация">
+      <a href="#my-team" data-route="my-team">Моя команда TI</a>
+      <a href="#teams" data-route="teams">TI 2026</a>
+      <a href="#live" data-route="live">Live</a>
+    </nav>
+
+    <div class="topbar-actions">
+      <div id="connectionBadge" class="connection checking hidden" aria-hidden="true">
+        <span></span>
+        Проверяю сервер
+      </div>
+      <a class="project-telegram" href="https://t.me/+XMVMYWHqUwVlMTEy"
+         target="_blank" rel="noopener noreferrer" aria-label="Telegram проекта">
+        <img src="assets/brands/telegram.svg" alt="">
+        <span>Telegram проекта</span>
+      </a>
+      <details class="developer-support">
+        <summary>Поддержать разработчика</summary>
+        <div class="developer-support-menu">
+          <span>Способы поддержки</span>
+          <a href="https://steamcommunity.com/tradeoffer/new/?partner=1861201573&amp;token=MeHFFW2T"
+             target="_blank" rel="noopener noreferrer">Steam Trade</a>
+          <a href="https://donatex.gg/donate/observer10yo"
+             target="_blank" rel="noopener noreferrer">DonateX</a>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main>
+    <section id="tiView" class="app-view ti-view hidden">
+      <section id="tiTeamsSection" class="ti-section ti-teams-section" data-ti-section="teams">
+        <div class="page-intro compact-intro">
+          <p class="eyebrow">The International 2026</p>
+          <h1>Команды TI 2026</h1>
+        </div>
+        <div class="team-actions-row" data-private-only>
+          <div class="heading-actions">
+            <button id="syncAllTeamsButton" class="primary-button" type="button">Синхронизировать 16 команд</button>
+            <button id="refreshTeamsButton" class="ghost-button" type="button">Обновить</button>
+          </div>
+        </div>
+        <section id="allTeamsJobPanel" class="job-panel hidden" data-private-only></section>
+        <div id="teamsGrid" class="teams-grid"></div>
+      </section>
+
+      <section id="tiPlayersSection" class="ti-section ti-players-section" data-ti-section="players">
+        <section id="globalSelectionFilters"></section>
+        <section class="players-toolbar">
+          <label>
+            <span>Найти игрока или команду</span>
+            <input id="playerSearch" type="search" placeholder="Nightfall, Team Spirit, Mid…">
+          </label>
+          <label>
+            <span>Роль</span>
+            <select id="playerRole">
+              <option value="">Все роли</option>
+              <option value="cores">Cores</option>
+              <option value="mid">Mid</option>
+              <option value="supps">Supps</option>
+            </select>
+          </label>
+          <div class="players-toolbar-note">Нажатие на заголовок меняет порядок сортировки.</div>
+        </section>
+        <div class="rating-legend">
+          <span>Стабильность:</span>
+          <b class="stability-low">низкая &lt;50</b>
+          <b class="stability-medium">средняя 50–64</b>
+          <b class="stability-high">высокая 65+</b>
+          <i></i>
+          <span>Соперники:</span>
+          <b class="strength-s">S — 1,05+</b>
+          <b class="strength-a">A — 1,01–1,04</b>
+          <b class="strength-b">B — ниже 1,01</b>
+        </div>
+        <section class="rating-guide" aria-label="Как считаются рейтинги ролей">
+          <details class="scoring-rules">
+            <summary><span class="rating-guide-icon" aria-hidden="true">∑</span><strong>Как начисляются фэнтези-очки</strong></summary>
+            <p>Счёт каждого игрока рассчитывается отдельно за карту. Для Cores и Supps результат карты равен среднему двух игроков, для Mid используется счёт мидера. Результат серии — сумма двух лучших карт; результат этапа — самая результативная серия в текущей выборке.</p>
+            <div class="scoring-formula-grid">
+              <span><b>Убийства</b>+107</span><span><b>Смерти</b>1950 − 195 за смерть</span>
+              <span><b>Крипы</b>+3</span><span><b>GPM</b>×2</span>
+              <span><b>Безумруд</b>+13</span><span><b>Башня</b>+352</span>
+              <span><b>Observer Ward</b>+117</span><span><b>Стак лагеря</b>+234</span>
+              <span><b>Руна</b>+141</span><span><b>Смотритель</b>+147</span>
+              <span><b>Лотос</b>+176</span><span><b>Рошан</b>+1172</span>
+              <span><b>Командные сражения</b>до 2124</span><span><b>Оглушения</b>+10 за секунду</span>
+              <span><b>Терзатель</b>+879</span><span><b>Курьер</b>+703</span>
+              <span><b>Первая кровь</b>+1934</span><span><b>Smoke of Deceit</b>+293</span>
+            </div>
+          </details>
+          <details>
+            <summary><span class="rating-guide-icon" aria-hidden="true">i</span><strong>Как считается стабильность</strong></summary>
+            <p>Это оценка от 0 до 100: чем она выше, тем ровнее роль набирает fantasy-очки от карты к карте. Расчёт берёт медиану, устойчивый разброс MAD и IQR, добавляет 20% обычного отклонения для редких провалов или всплесков и переводит относительный разброс по формуле <b>100 / (1 + 2 × разброс)</b>. До трёх выбранных карт оценка скрыта; уверенность растёт вместе с выборкой.</p>
+          </details>
+          <details>
+            <summary><span class="rating-guide-icon" aria-hidden="true">i</span><strong>Как считается сила соперников</strong></summary>
+            <p>Команды получают хронологический Elo по результатам всех распарсенных профессиональных карт с точными составами: стартовый рейтинг 1500, коэффициент обновления K=24. Сила карты равна <b>1 + (Elo соперника − 1500) / 1000</b> и ограничена диапазоном 0,75–1,25. В таблице показано среднее по выбранным картам роли: B — ниже 1,01, A — от 1,01 до 1,04, S — от 1,05.</p>
+          </details>
+        </section>
+        <div id="playersTable" class="players-table-shell"></div>
+        <div id="playersTableActions" class="players-table-actions hidden">
+          <button id="playersTableToggle" class="players-table-toggle" type="button"
+                  aria-controls="playersTable" aria-expanded="false">
+            <span>Показать ещё</span>
+            <strong aria-hidden="true">↓</strong>
+          </button>
+        </div>
+      </section>
+    </section>
+
+    <section id="liveView" class="app-view live-view hidden" aria-labelledby="liveTitle">
+      <section class="live-development-banner" aria-label="LIVE в разработке">
+        <span>Fantasy Time Live</span>
+        <strong>В РАЗРАБОТКЕ</strong>
+      </section>
+      <section class="live-intro">
+        <div>
+          <p class="eyebrow">Live center · SourceTV</p>
+          <h1 id="liveTitle">1win Essence II</h1>
+          <p id="liveNotice" class="lead">Загружаю техническое расписание.</p>
+        </div>
+        <span id="liveUpdated" class="live-updated">Проверяю</span>
+      </section>
+
+      <section class="live-schedule-section" aria-labelledby="liveScheduleTitle">
+        <div class="live-section-heading">
+          <div>
+            <p class="eyebrow">Прямо сейчас</p>
+            <h2 id="liveScheduleTitle">Матчи наших команд</h2>
+          </div>
+          <span class="live-test-badge">1win Essence II · тест</span>
+        </div>
+        <p class="live-caption">Счёт карты, игровое время, перевес по золоту, зрители и выбранные герои обновляются из SourceTV примерно раз в 20 секунд. Ники и позиции сопоставляются с заявленными составами. KDA и координаты не подменяются нулями, если SourceTV их не передаёт.</p>
+        <div id="liveSchedule" class="live-schedule" aria-live="polite"></div>
+      </section>
+
+      <section class="live-format-section" aria-labelledby="liveGroupsTitle">
+        <div class="live-section-heading">
+          <div>
+            <p class="eyebrow">30 июля — 2 августа</p>
+            <h2 id="liveGroupsTitle">Групповая стадия</h2>
+          </div>
+          <span class="live-format-note">2 группы · BO2</span>
+        </div>
+        <div id="liveGroups" class="live-groups"></div>
+      </section>
+
+      <section class="live-format-section" aria-labelledby="liveTiebreakersTitle">
+        <div class="live-section-heading compact">
+          <div>
+            <p class="eyebrow">При равенстве</p>
+            <h2 id="liveTiebreakersTitle">Переигровки</h2>
+          </div>
+        </div>
+        <div id="liveTiebreakers" class="live-tiebreakers"></div>
+      </section>
+
+      <section class="live-format-section" aria-labelledby="liveBracketTitle">
+        <div class="live-section-heading">
+          <div>
+            <p class="eyebrow">3–5 августа</p>
+            <h2 id="liveBracketTitle">Плей-офф</h2>
+          </div>
+          <span class="live-format-note">Double elimination · BO3 · финал BO5</span>
+        </div>
+        <div id="liveBracket" class="live-bracket" aria-label="Полная сетка плей-офф"></div>
+      </section>
+
+      <section id="liveTracker" class="live-tracker hidden" aria-live="polite">
+        <div class="live-tracker-heading">
+          <button id="liveBack" class="back-button" type="button">← К сетке</button>
+          <div>
+            <p id="liveTrackerState" class="eyebrow">Матч</p>
+            <h2 id="liveTrackerTitle">Выберите матч</h2>
+          </div>
+        </div>
+        <p id="liveTrackerMessage" class="live-tracker-message"></p>
+        <div id="liveScoreboard" class="live-scoreboard"></div>
+        <div class="live-tracker-layout">
+          <aside class="live-team-panel radiant" aria-label="Состав Radiant">
+            <header>
+              <span>Radiant</span>
+              <strong id="liveRadiantName">Radiant</strong>
+            </header>
+            <div id="liveRadiantPlayers" class="live-players"></div>
+          </aside>
+          <section class="live-map-panel" aria-label="Карта матча">
+            <div class="live-map-header">
+              <strong>Карта</strong>
+              <div class="live-map-tools">
+                <span id="liveGameClock">—</span>
+                <button id="liveMapSize" class="live-map-size" type="button" aria-pressed="false">Увеличить карту</button>
+              </div>
+            </div>
+            <div id="liveMap" class="live-map" role="img" aria-label="Позиции, перемещения, строения и состояние Рошана"></div>
+          </section>
+          <aside class="live-team-panel dire" aria-label="Состав Dire">
+            <header>
+              <span>Dire</span>
+              <strong id="liveDireName">Dire</strong>
+            </header>
+            <div id="liveDirePlayers" class="live-players"></div>
+          </aside>
+        </div>
+      </section>
+    </section>
+
+    <section id="teamView" class="app-view hidden">
+      <button id="backToTeams" class="back-button" type="button">← Все команды</button>
+      <div id="teamPage"></div>
+    </section>
+
+    <section id="fantasyBuilderView" class="app-view hidden">
+      <div id="fantasyBuilderPage"></div>
+    </section>
+
+    <section id="playerView" class="app-view hidden">
+      <button id="backFromPlayer" class="back-button" type="button">← Назад</button>
+      <div id="playerPage"></div>
+    </section>
+  </main>
+
+  <footer class="public-footer" data-public-only>
+    <span>Fantasy Time · статистика The International 2026</span>
+    <a href="privacy.html">Конфиденциальность</a>
+  </footer>
+
+  <button id="tiSectionSwitcher" class="ti-section-switcher hidden" type="button"
+          aria-label="Перейти к игрокам TI">
+    <span class="ti-switcher-label">Игроки TI</span>
+    <span class="ti-switcher-icon" aria-hidden="true">↓</span>
+  </button>
+
+  <dialog id="matchDialog" class="match-dialog">
+    <div class="dialog-shell">
+      <header class="dialog-header">
+        <div>
+          <button id="backToSeries" class="dialog-back hidden" type="button">← Вернуться к BO-серии</button>
+          <p id="dialogEyebrow" class="eyebrow">Матч</p>
+          <h2 id="dialogTitle">Статистика</h2>
+          <p id="dialogMeta" class="dialog-meta"></p>
+        </div>
+        <button id="closeDialog" class="close-button" type="button" aria-label="Закрыть">×</button>
+      </header>
+      <div id="dialogContent" class="dialog-content"></div>
+    </div>
+  </dialog>
+
+  <dialog id="playerDialog" class="match-dialog player-dialog">
+    <div class="dialog-shell">
+      <header class="dialog-header">
+        <div>
+          <p class="eyebrow">Fantasy profile</p>
+          <h2 id="playerDialogTitle">Игрок</h2>
+          <p id="playerDialogMeta" class="dialog-meta"></p>
+        </div>
+        <button id="closePlayerDialog" class="close-button" type="button" aria-label="Закрыть">×</button>
+      </header>
+      <div id="playerDialogContent" class="dialog-content"></div>
+    </div>
+  </dialog>
+
+  <dialog id="seriesDialog" class="match-dialog series-dialog">
+    <div class="dialog-shell">
+      <header class="dialog-header">
+        <div>
+          <p id="seriesDialogEyebrow" class="eyebrow">BO-серия</p>
+          <h2 id="seriesDialogTitle">Серия</h2>
+          <p id="seriesDialogMeta" class="dialog-meta"></p>
+        </div>
+        <button id="closeSeriesDialog" class="close-button" type="button" aria-label="Закрыть">×</button>
+      </header>
+      <div id="seriesDialogContent" class="dialog-content"></div>
+    </div>
+  </dialog>
+
+  <dialog id="fantasyBuilderDialog" class="fantasy-builder-dialog">
+    <div>
+      <header>
+        <div>
+          <p class="eyebrow" data-fantasy-dialog-eyebrow>Fantasy Lab</p>
+          <h2 data-fantasy-dialog-title>Настройка</h2>
+        </div>
+        <button type="button" data-close-fantasy-dialog aria-label="Закрыть">×</button>
+      </header>
+      <div data-fantasy-dialog-content></div>
+    </div>
+  </dialog>
+
+  <template id="matchCardTemplate">
+    <button class="match-card" type="button">
+      <div class="match-card-top">
+        <span class="match-id"></span>
+        <span class="winner-pill"></span>
+      </div>
+      <div class="score-line">
+        <span class="radiant-score"></span>
+        <span class="score-separator">:</span>
+        <span class="dire-score"></span>
+      </div>
+      <div class="match-card-bottom">
+        <span class="match-date"></span>
+        <span class="match-duration"></span>
+      </div>
+    </button>
+  </template>
+
+  <script src="fantasy-assets.js?v=official-team-emblems-v4"></script>
+  <script src="fantasy-builder.js?v=emblem-layout-v5"></script>
+  <script src="app.js?v=official-team-emblems-v4"></script>
+  <script src="live.js?v=live-tournament-v1"></script>
+</body>
+</html>
+

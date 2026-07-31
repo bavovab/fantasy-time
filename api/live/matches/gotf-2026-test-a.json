@@ -1,0 +1,10 @@
+{
+  "id": "gotf-2026-test-a",
+  "state": "not_started",
+  "message": "Матч не начался. Трансляция включится автоматически, когда наблюдатель подтвердит доступность Dota TV.",
+  "radiant": { "name": "TBD" },
+  "dire": { "name": "TBD" },
+  "score": { "radiant": 0, "dire": 0, "radiantGoldLead": 0 },
+  "players": [],
+  "map": { "players": [], "towers": [] }
+}
