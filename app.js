@@ -2119,11 +2119,14 @@ function tournamentVisual(name) {
   if (normalized.includes("dreamleague")) {
     return { tone: "dreamleague", mark: "DL", logo: "assets/tournaments/dreamleague.png" };
   }
+  if (normalized.includes("games of the future")) {
+    return { tone: "future", mark: "GOTF", logo: "assets/tournaments/games-of-the-future.svg" };
+  }
   if (normalized.includes("international") && normalized.includes("qualif")) {
     return { tone: "qualifier", mark: "Q26", logo: "" };
   }
   if (normalized.includes("esl")) return { tone: "esl", mark: "ESL", logo: "" };
-  if (normalized.includes("1win")) return { tone: "onewin", mark: "1W", logo: "" };
+  if (normalized.includes("1win")) return { tone: "onewin", mark: "1W", logo: "assets/tournaments/1win.svg" };
   const words = String(name || "Турнир").split(/\s+/).filter(Boolean);
   return { tone: "default", mark: words.slice(0, 2).map(word => word[0]).join("").toUpperCase(), logo: "" };
 }
@@ -2169,12 +2172,19 @@ function initializePublicTournamentFilter(reset = false) {
   const available = new Set(overview.leagues.map(league => league.name));
   const preference = readPublicTournamentFilterPreference();
   const savedLeagues = Array.isArray(preference?.leagueNames)
-    ? preference.leagueNames.filter(name => available.has(name))
-    : null;
-  const defaults = overview.leagues.filter(league => league.includedCount > 0).map(league => league.name);
+    ? preference.leagueNames.filter(name => available.has(name)) : null;
+  const knownLeagues = new Set(Array.isArray(preference?.knownLeagueNames)
+    ? preference.knownLeagueNames : []);
+  const selectedLeagues = new Set(savedLeagues === null || knownLeagues.size === 0
+    ? available
+    : savedLeagues);
+  available.forEach(name => {
+    if (!knownLeagues.has(name)) selectedLeagues.add(name);
+  });
   publicTournamentFilter = {
     initialized: true,
-    leagueNames: new Set(savedLeagues === null ? (defaults.length ? defaults : [...available]) : savedLeagues),
+    leagueNames: selectedLeagues,
+    knownLeagueNames: [...available],
     limit: Math.min(overview.maxMatches, Math.max(1,
       Number(preference?.limit || overview.selectedPerTeam || Math.min(20, overview.maxMatches)))),
     overview,
@@ -2184,6 +2194,7 @@ function initializePublicTournamentFilter(reset = false) {
 function savePublicTournamentFilterPreference() {
   localStorage.setItem(PUBLIC_TOURNAMENT_FILTER_KEY, JSON.stringify({
     leagueNames: [...publicTournamentFilter.leagueNames],
+    knownLeagueNames: publicTournamentFilter.knownLeagueNames || [...publicTournamentFilter.overview.leagues.map(league => league.name)],
     limit: publicTournamentFilter.limit,
   }));
 }

@@ -1696,6 +1696,8 @@ body.ux-v2 .public-tournament-filter .public-filter-footer {
 .tournament-filter-logo-blast img { width: 88%; height: 88%; object-fit: contain; }
 .tournament-filter-logo-dreamleague img { width: 76%; height: 76%; filter: invert(1); }
 .tournament-filter-logo-ewc img { width: 88%; height: 88%; }
+.tournament-filter-logo-onewin img { width: 84%; height: 84%; }
+.tournament-filter-logo-future img { width: 82%; height: 82%; }
 
 .tournament-filter-copy {
   min-width: 0;

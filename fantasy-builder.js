@@ -92,6 +92,7 @@ function defaultFantasyBuilderState() {
   return {
     version: FANTASY_BUILDER_VERSION,
     leagues: [],
+    knownLeagues: [],
     limit: 20,
     mode: "map",
     title: { prefix: "none", suffix: "none" },
@@ -174,12 +175,18 @@ function initializeFantasyBuilderState() {
     ? fantasyBuilderState.title.suffix : "none";
   fantasyBuilderState.mode = ["map", "series"].includes(fantasyBuilderState.mode)
     ? fantasyBuilderState.mode : "map";
-  fantasyBuilderState.leagues = Array.isArray(fantasyBuilderState.leagues)
-    ? fantasyBuilderState.leagues.filter(name => availableLeagues.has(name)) : [];
-  if (!fantasyBuilderState.leagues.length) {
-    const included = overview.leagues.filter(league => league.includedCount > 0).map(league => league.name);
-    fantasyBuilderState.leagues = included.length ? included : [...availableLeagues];
-  }
+  const savedLeagues = Array.isArray(fantasyBuilderState.leagues)
+    ? fantasyBuilderState.leagues.filter(name => availableLeagues.has(name)) : null;
+  const knownLeagues = new Set(Array.isArray(fantasyBuilderState.knownLeagues)
+    ? fantasyBuilderState.knownLeagues : []);
+  const selectedLeagues = new Set(savedLeagues === null || knownLeagues.size === 0
+    ? availableLeagues
+    : savedLeagues);
+  availableLeagues.forEach(name => {
+    if (!knownLeagues.has(name)) selectedLeagues.add(name);
+  });
+  fantasyBuilderState.leagues = [...selectedLeagues];
+  fantasyBuilderState.knownLeagues = [...availableLeagues];
   fantasyBuilderState.limit = Math.min(overview.maxMatches, Math.max(1, Number(fantasyBuilderState.limit || 20)));
   Object.keys(fantasyRoleRules).forEach(roleKey => {
     const candidates = fantasyRoleCandidates(roleKey);
@@ -490,24 +497,17 @@ function fantasyTournamentDate(group) {
   return firstLabel === lastLabel ? firstLabel : `${firstLabel} - ${lastLabel}`;
 }
 
-function fantasyBuilderTournamentGroups(leagues) {
-  return (leagues || []).map(league => ({
-    ...league,
-    key: String(league.name || ""),
-    names: [league.name],
-  }));
-}
-
 function renderFantasyBuilderFilters(overview) {
-  const groups = fantasyBuilderTournamentGroups(overview.leagues).sort((left, right) =>
+  const groups = tournamentFilterGroups(overview.leagues).sort((left, right) =>
     fantasyTournamentSortTime(right) - fantasyTournamentSortTime(left)
       || String(left.name || "").localeCompare(String(right.name || ""), "ru"));
   const selected = new Set(fantasyBuilderState.leagues);
   const selectedGroupCount = groups.filter(group => groupIsSelected(selected, group)).length;
+  const tournamentCount = groups.reduce((total, group) => total + group.names.length, 0);
   return `<section class="fantasy-builder-filters">
     <div class="fantasy-filter-heading">
       <span>Турниры для расчёта</span>
-      <div><strong>${selectedGroupCount} из ${groups.length}</strong>${groups.length > 1 ? `<button type="button" data-fantasy-filters-toggle aria-expanded="${fantasyFiltersExpanded}">${fantasyFiltersExpanded ? "Свернуть" : "Показать все"}</button>` : ""}</div>
+      <div><strong>${selectedGroupCount} из ${groups.length} групп · ${tournamentCount} турниров</strong>${groups.length > 1 ? `<button type="button" data-fantasy-filters-toggle aria-expanded="${fantasyFiltersExpanded}">${fantasyFiltersExpanded ? "Свернуть" : "Показать все турниры"}</button>` : ""}</div>
     </div>
     <div class="fantasy-filter-list ${fantasyFiltersExpanded ? "is-expanded" : ""}">${groups.map(group => `<label data-fantasy-tournament-date="${fantasyTournamentSortTime(group)}">
       <input type="checkbox" data-fantasy-league data-league-names="${encodeLeagueNames(group.names)}" ${groupIsSelected(selected, group) ? "checked" : ""}>
@@ -645,7 +645,7 @@ function bindFantasyBuilderShell() {
       const filterList = root.querySelector(".fantasy-filter-list");
       filterList?.classList.toggle("is-expanded", fantasyFiltersExpanded);
       target.setAttribute("aria-expanded", String(fantasyFiltersExpanded));
-      target.textContent = fantasyFiltersExpanded ? "Свернуть" : "Показать все";
+      target.textContent = fantasyFiltersExpanded ? "Свернуть" : "Показать все турниры";
     } else if (target.dataset.fantasyChangePlayer) {
       openFantasyPlayerPicker(target.dataset.fantasyChangePlayer);
     } else if (target.dataset.fantasyEmblem) {
