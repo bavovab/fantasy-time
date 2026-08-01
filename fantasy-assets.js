@@ -24,7 +24,7 @@
   });
 
   const teamEmblems = Object.freeze({
-    "1w": "/1w-logo.png",
+    "1w": `${teamRoot}/10150413-iron-wing.png`,
     aurora: `${teamRoot}/9467224-aurora-gaming.webp`,
     boomboys: `${teamRoot}/8255888-boomboys.webp`,
     falcons: `${teamRoot}/9247354-team-falcons.webp`,
@@ -45,6 +45,7 @@
   const teamAliases = Object.freeze({
     "1w": "1w",
     "1wteam": "1w",
+    "ironwing": "1w",
     "aurora": "aurora",
     "auroragaming": "aurora",
     "boomboys": "boomboys",

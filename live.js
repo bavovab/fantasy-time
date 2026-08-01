@@ -420,8 +420,8 @@
     const lead = Number(score.radiantGoldLead || 0);
     advantage.textContent = lead === 0 ? "Перевес по золоту: равный" : `Перевес: ${lead > 0 ? "Radiant" : "Dire"} ${Math.abs(lead).toLocaleString("ru-RU")}`;
     elements.scoreboard.append(total, advantage);
-    elements.radiantName.textContent = match?.radiant?.name || "Radiant";
-    elements.direName.textContent = match?.dire?.name || "Dire";
+    elements.radiantName.textContent = publicLiveTeamName(match?.radiant?.name || "Radiant");
+    elements.direName.textContent = publicLiveTeamName(match?.dire?.name || "Dire");
     elements.radiantPlayers.replaceChildren();
     elements.direPlayers.replaceChildren();
     const players = Array.isArray(match?.players) ? match.players : [];
@@ -477,6 +477,12 @@
       row.append(identity, kda, worth);
       (player.team === "dire" ? elements.direPlayers : elements.radiantPlayers).append(row);
     });
+  }
+
+  function publicLiveTeamName(value) {
+    const name = String(value || "").trim();
+    const key = name.toLowerCase().replace(/[^a-z0-9]+/g, "");
+    return key === "1w" || key === "1wteam" || key === "ironwing" ? "Iron Wing" : name;
   }
 
   function renderMatch(match) {

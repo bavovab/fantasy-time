@@ -524,9 +524,7 @@ function renderFantasyRoleBanner(roleKey, projection, mode) {
   const slot = fantasyBuilderState.slots[roleKey];
   const score = mode === "map" ? projection.mapAverage : projection.seriesAverage;
   const records = mode === "map" ? projection.maps : projection.series;
-  const logo = candidate?.teamSlug === "1w"
-    ? "1w-logo.png"
-    : fantasyAssets.teamEmblem(candidate?.teamSlug, candidate?.teamLogoUrl);
+  const logo = fantasyAssets.teamEmblem(candidate?.teamSlug, candidate?.teamLogoUrl);
   const members = candidate?.members || [];
   const memberNames = members.map(member => member.name).join(" и ");
   return `<article class="fantasy-banner fantasy-banner-${roleKey}">
@@ -760,9 +758,7 @@ function openFantasyPlayerPicker(roleKey) {
   }[roleKey] || `Выберите ${fantasyRoleRules[roleKey].short}`;
   setFantasyDialog(pickerTitle, "Готовые турнирные составы", `
     <div class="fantasy-picker-list">${candidates.map(({ candidate, projection }) => {
-      const logo = candidate.teamSlug === "1w"
-        ? "1w-logo.png"
-        : fantasyAssets.teamEmblem(candidate.teamSlug, candidate.teamLogoUrl);
+      const logo = fantasyAssets.teamEmblem(candidate.teamSlug, candidate.teamLogoUrl);
       const ratings = fantasyCandidateRatings(candidate);
       const score = projection.mapAverage.total;
       const seriesScore = projection.seriesAverage.total;

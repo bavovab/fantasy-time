@@ -527,6 +527,122 @@ body.public-mode .hero-logo {
 body.public-mode .public-footer {
   border-top-color: #3d3523;
   color: #8e8265;
+  align-items: flex-start;
+}
+
+body.public-mode .public-footer-copy {
+  display: grid;
+  max-width: 760px;
+  gap: 5px;
+  line-height: 1.45;
+}
+
+body.public-mode .public-footer-copy strong {
+  color: #d9ca9f;
+  font-size: 13px;
+  font-weight: 750;
+}
+
+body.public-mode .public-footer-copy span {
+  color: #8e8265;
+  font-size: 12px;
+}
+
+body.public-mode .public-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+body.public-mode .public-footer-links a {
+  white-space: nowrap;
+}
+
+.legal-page {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 56px 0 80px;
+}
+
+.legal-page h1 {
+  max-width: 900px;
+}
+
+.legal-page section {
+  padding: 26px 0;
+}
+
+.legal-contact {
+  display: inline-flex;
+  margin-top: 14px;
+  color: #f0cb70;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.legal-contact:hover,
+.legal-contact:focus-visible {
+  color: #ffffff;
+}
+
+.legal-steps {
+  margin: 14px 0 0;
+  padding-left: 22px;
+  color: #aeb9c8;
+  line-height: 1.65;
+}
+
+.asset-registry-scroll {
+  margin-top: 18px;
+  overflow-x: auto;
+  border: 1px solid rgba(213, 170, 69, 0.24);
+  border-radius: 6px;
+}
+
+.asset-registry {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: collapse;
+  background: rgba(12, 11, 8, 0.76);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.asset-registry th,
+.asset-registry td {
+  padding: 13px 14px;
+  border-bottom: 1px solid rgba(177, 192, 211, 0.13);
+  text-align: left;
+  vertical-align: top;
+}
+
+.asset-registry th {
+  color: #f0cb70;
+  background: rgba(213, 170, 69, 0.08);
+  font-size: 12px;
+}
+
+.asset-registry tr:last-child td {
+  border-bottom: 0;
+}
+
+.asset-registry code {
+  color: #e8ddbf;
+  font-size: 12px;
+}
+
+.asset-registry a,
+.legal-page section a {
+  color: #d5aa45;
+}
+
+.legal-note {
+  margin-top: 16px;
+  color: #8e8265;
+  font-size: 12px;
+  line-height: 1.6;
 }
 
 /* Public statistics must remain readable without browser zoom. */
@@ -649,5 +765,13 @@ body.public-mode .profile-emblem-recommendations > a {
 
   body.public-mode .scoring-formula-grid {
     grid-template-columns: 1fr;
+  }
+
+  body.public-mode .public-footer-links {
+    justify-content: flex-start;
+  }
+
+  .legal-page {
+    padding-top: 32px;
   }
 }
