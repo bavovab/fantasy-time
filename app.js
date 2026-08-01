@@ -184,7 +184,7 @@ async function api(path, options = {}) {
     if (retryDelays[attempt]) {
       await new Promise(resolve => setTimeout(resolve, retryDelays[attempt]));
     }
-    response = await fetch(resolveAPIURL(path, attempt), requestOptions);
+    response = await fetch(await resolveAPIURL(path, attempt), requestOptions);
     if (response.status !== 404 || attempt === retryDelays.length - 1) break;
   }
   const body = await response.json().catch(() => ({}));
@@ -197,12 +197,28 @@ async function api(path, options = {}) {
   return body;
 }
 
-function resolveAPIURL(path, retryAttempt = 0) {
+async function staticAPISegmentKey(value) {
+  const bytes = new TextEncoder().encode(value);
+  const digest = await window.crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function resolveAPIURL(path, retryAttempt = 0) {
   if (!PUBLIC_MODE || window.DOTA_HUB_STATIC_API !== true) {
     return `${API_BASE}${path}`;
   }
   const [pathname, ...queryParts] = String(path || "").split("?");
-  const relativePath = pathname.replace(/^\/+/, "");
+  let relativePath = pathname.replace(/^\/+/, "");
+  const detailRoute = relativePath.match(/^api\/(teams|tournament-players)\/([^/]+)$/);
+  if (detailRoute) {
+    let segment = detailRoute[2];
+    try {
+      segment = decodeURIComponent(segment);
+    } catch {
+      // Keep the original segment so malformed input remains isolated to its own key.
+    }
+    relativePath = `api/${detailRoute[1]}/${await staticAPISegmentKey(segment)}`;
+  }
   const params = new URLSearchParams(queryParts.join("?"));
   const release = String(window.DOTA_HUB_STATIC_RELEASE || "").trim();
   if (release) params.set("release", release);
