@@ -6,7 +6,7 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-01T09:44:41Z",
+  "updatedAt": "2026-08-01T09:55:01Z",
   "matches": [
     {
       "id": "1win-essence-2-test-8923708184",
@@ -19,14 +19,14 @@
       },
       "state": "live",
       "interesting": true,
-      "interestReason": "Равная игра после 20-й минуты: разница по золоту не превышает 3 000",
-      "gameTimeSeconds": 1553,
+      "interestReason": "Поздняя стадия матча: результат может решить одна драка",
+      "gameTimeSeconds": 2213,
       "delaySeconds": 900,
-      "spectators": 384,
+      "spectators": 558,
       "score": {
-        "radiant": 10,
-        "dire": 9,
-        "radiantGoldLead": -2493
+        "radiant": 16,
+        "dire": 14,
+        "radiantGoldLead": -3011
       }
     }
   ],
