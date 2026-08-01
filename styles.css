@@ -2345,6 +2345,15 @@ body.ux-v2 .public-tournament-filter .public-filter-footer {
   box-shadow: var(--shadow);
 }
 
+#matchDialog {
+  width: min(1880px, calc(100vw - 24px));
+  max-width: none;
+}
+
+#matchDialog .dialog-shell {
+  width: 100%;
+}
+
 .match-dialog::backdrop {
   background: rgba(0, 0, 0, 0.78);
   backdrop-filter: blur(8px);
@@ -2455,21 +2464,26 @@ body.ux-v2 .public-tournament-filter .public-filter-footer {
 }
 
 .stats-scroller {
-  overflow-x: hidden;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-color: rgba(223, 187, 112, 0.55) rgba(255, 255, 255, 0.04);
+  scrollbar-gutter: stable;
   border: 1px solid var(--line);
   border-radius: 12px;
 }
 
 .stats-table {
-  width: 100%;
-  table-layout: fixed;
+  width: max-content;
+  min-width: 1720px;
+  table-layout: auto;
   border-collapse: collapse;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .stats-table th,
 .stats-table td {
-  padding: 4px 3px;
+  min-width: 58px;
+  padding: 5px 6px;
   text-align: right;
   border-bottom: 1px solid rgba(255, 255, 255, 0.055);
   white-space: nowrap;
@@ -2478,16 +2492,38 @@ body.ux-v2 .public-tournament-filter .public-filter-footer {
 .stats-table th {
   color: #747471;
   background: rgba(255, 255, 255, 0.02);
-  font-size: 7px;
+  font-size: 8px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .stats-table th:first-child,
 .stats-table td:first-child {
-  width: 180px;
+  position: sticky;
+  left: 0;
+  width: 220px;
+  min-width: 220px;
   text-align: left;
   background: #14171b;
+  box-shadow: 1px 0 0 var(--line);
+}
+
+.stats-table th:first-child {
+  z-index: 3;
+}
+
+.stats-table td:first-child {
+  z-index: 1;
+}
+
+.stats-table th:nth-child(2),
+.stats-table td:nth-child(2) {
+  min-width: 86px;
+}
+
+.stats-table .metric-table-heading {
+  justify-content: flex-end;
+  white-space: nowrap;
 }
 
 .stats-table tbody tr:last-child td {
