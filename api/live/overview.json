@@ -6,8 +6,30 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-01T16:23:01Z",
-  "matches": [],
+  "updatedAt": "2026-08-01T18:22:21Z",
+  "matches": [
+    {
+      "id": "1win-essence-2-test-8924391901",
+      "matchId": 8924391901,
+      "radiant": {
+        "name": "Team Falcons"
+      },
+      "dire": {
+        "name": "OG"
+      },
+      "state": "live",
+      "interesting": true,
+      "interestReason": "Поздняя стадия матча: результат может решить одна драка",
+      "gameTimeSeconds": 5309,
+      "delaySeconds": 900,
+      "spectators": 2191,
+      "score": {
+        "radiant": 57,
+        "dire": 60,
+        "radiantGoldLead": -51932
+      }
+    }
+  ],
   "groups": [
     {
       "id": "a",
@@ -322,21 +344,27 @@
           }
         },
         {
-          "id": "b-falcons-og",
+          "id": "1win-essence-2-test-8924391901",
+          "matchId": 8924391901,
           "radiant": {
             "name": "Team Falcons"
           },
           "dire": {
             "name": "OG"
           },
-          "state": "scheduled",
+          "state": "live",
           "stage": "series",
           "scheduledAt": "2026-08-01T18:00:00+03:00",
           "bestOf": 2,
+          "interesting": true,
+          "interestReason": "Поздняя стадия матча: результат может решить одна драка",
+          "gameTimeSeconds": 5309,
+          "delaySeconds": 900,
+          "spectators": 2191,
           "score": {
-            "radiant": 0,
-            "dire": 0,
-            "radiantGoldLead": 0
+            "radiant": 57,
+            "dire": 60,
+            "radiantGoldLead": -51932
           }
         },
         {
