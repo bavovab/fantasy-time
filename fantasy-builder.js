@@ -490,8 +490,16 @@ function fantasyTournamentDate(group) {
   return firstLabel === lastLabel ? firstLabel : `${firstLabel} - ${lastLabel}`;
 }
 
+function fantasyBuilderTournamentGroups(leagues) {
+  return (leagues || []).map(league => ({
+    ...league,
+    key: String(league.name || ""),
+    names: [league.name],
+  }));
+}
+
 function renderFantasyBuilderFilters(overview) {
-  const groups = [...tournamentFilterGroups(overview.leagues)].sort((left, right) =>
+  const groups = fantasyBuilderTournamentGroups(overview.leagues).sort((left, right) =>
     fantasyTournamentSortTime(right) - fantasyTournamentSortTime(left)
       || String(left.name || "").localeCompare(String(right.name || ""), "ru"));
   const selected = new Set(fantasyBuilderState.leagues);
