@@ -6,7 +6,7 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-01T14:26:21Z",
+  "updatedAt": "2026-08-01T14:34:21Z",
   "matches": [
     {
       "id": "1win-essence-2-test-8924128664",
@@ -18,13 +18,13 @@
         "name": "GamerLegion"
       },
       "state": "live",
-      "gameTimeSeconds": 495,
+      "gameTimeSeconds": 976,
       "delaySeconds": 900,
-      "spectators": 175,
+      "spectators": 483,
       "score": {
-        "radiant": 1,
-        "dire": 3,
-        "radiantGoldLead": 1331
+        "radiant": 2,
+        "dire": 9,
+        "radiantGoldLead": -1257
       }
     }
   ],

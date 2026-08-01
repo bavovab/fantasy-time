@@ -995,7 +995,7 @@ function wideTeamLogo(slug) {
 function preferredTeamEmblem(teamSlug, fallback = "", teamName = "") {
   const assets = globalThis.FantasyAssets;
   if (!assets) return String(teamSlug || "").toLowerCase() === "1w"
-    ? "assets/ti2026/teams/10150413-iron-wing.png"
+    ? "assets/ti2026/teams/10150413-iron-wing.webp"
     : fallback;
   const byName = typeof assets.teamEmblemByName === "function"
     ? assets.teamEmblemByName(teamName, fallback)
