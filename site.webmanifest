@@ -1,0 +1,19 @@
+{
+  "name": "Fantasy Time — фэнтези-аналитика TI 2026",
+  "short_name": "Fantasy Time",
+  "description": "Статистика профессиональных матчей и калькулятор фэнтези-состава для The International 2026.",
+  "lang": "ru-RU",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#070806",
+  "theme_color": "#0b0c09",
+  "icons": [
+    {
+      "src": "assets/fantasy-time-mark.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

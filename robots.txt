@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://fantasy-time.online/sitemap.xml
+Host: fantasy-time.online

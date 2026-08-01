@@ -182,7 +182,9 @@ body.public-mode .developer-support-menu span {
 }
 
 body.public-mode .developer-support-menu a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 10px 9px;
   color: #fff0c7;
   border-radius: 4px;
@@ -190,6 +192,19 @@ body.public-mode .developer-support-menu a {
   text-decoration: none;
   font-size: 12px;
   font-weight: 750;
+}
+
+body.public-mode .developer-support-menu a img {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+body.public-mode .developer-support-menu a span {
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  text-transform: none;
 }
 
 body.public-mode .developer-support-menu a + a { margin-top: 6px; }
