@@ -168,28 +168,47 @@ async function api(path, options = {}) {
   if (PUBLIC_MODE && !["GET", "HEAD"].includes(method)) {
     throw new Error("Публичная версия доступна только для просмотра");
   }
+  const staticRead = PUBLIC_MODE && window.DOTA_HUB_STATIC_API === true && ["GET", "HEAD"].includes(method);
   const headers = { ...(options.headers || {}) };
   if (options.body !== undefined && !headers["Content-Type"]) headers["Content-Type"] = "application/json";
-  const response = await fetch(resolveAPIURL(path), {
+  const requestOptions = {
     ...options,
     credentials: PUBLIC_MODE ? "omit" : "include",
     headers,
-  });
+  };
+  if (staticRead && requestOptions.cache === undefined) requestOptions.cache = "no-store";
+
+  const retryDelays = staticRead ? [0, 400, 1200] : [0];
+  let response;
+  for (let attempt = 0; attempt < retryDelays.length; attempt += 1) {
+    if (retryDelays[attempt]) {
+      await new Promise(resolve => setTimeout(resolve, retryDelays[attempt]));
+    }
+    response = await fetch(resolveAPIURL(path, attempt), requestOptions);
+    if (response.status !== 404 || attempt === retryDelays.length - 1) break;
+  }
   const body = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error(body.error || `HTTP ${response.status}`);
+    const message = staticRead && response.status === 404
+      ? "Данные сайта обновляются. Перезагрузите страницу через несколько секунд."
+      : (body.error || `HTTP ${response.status}`);
+    throw new Error(message);
   }
   return body;
 }
 
-function resolveAPIURL(path) {
+function resolveAPIURL(path, retryAttempt = 0) {
   if (!PUBLIC_MODE || window.DOTA_HUB_STATIC_API !== true) {
     return `${API_BASE}${path}`;
   }
   const [pathname, ...queryParts] = String(path || "").split("?");
   const relativePath = pathname.replace(/^\/+/, "");
-  const query = queryParts.length ? `?${queryParts.join("?")}` : "";
-  return `${relativePath}.json${query}`;
+  const params = new URLSearchParams(queryParts.join("?"));
+  const release = String(window.DOTA_HUB_STATIC_RELEASE || "").trim();
+  if (release) params.set("release", release);
+  if (retryAttempt > 0) params.set("retry", `${retryAttempt}-${Date.now()}`);
+  const query = params.toString();
+  return `/${relativePath}.json${query ? `?${query}` : ""}`;
 }
 
 function applyDesignMode(mode) {
