@@ -6,8 +6,30 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-02T00:23:21Z",
-  "matches": [],
+  "updatedAt": "2026-08-02T10:09:01Z",
+  "matches": [
+    {
+      "id": "1win-essence-2-test-8925460065",
+      "matchId": 8925460065,
+      "radiant": {
+        "name": "Nigma Galaxy"
+      },
+      "dire": {
+        "name": "OG"
+      },
+      "state": "live",
+      "interesting": true,
+      "interestReason": "Поздняя стадия матча: результат может решить одна драка",
+      "gameTimeSeconds": 2555,
+      "delaySeconds": 900,
+      "spectators": 1148,
+      "score": {
+        "radiant": 39,
+        "dire": 15,
+        "radiantGoldLead": 32562
+      }
+    }
+  ],
   "groups": [
     {
       "id": "a",
@@ -340,21 +362,27 @@
           }
         },
         {
-          "id": "b-nigma-og",
+          "id": "1win-essence-2-test-8925460065",
+          "matchId": 8925460065,
           "radiant": {
             "name": "Nigma Galaxy"
           },
           "dire": {
             "name": "OG"
           },
-          "state": "scheduled",
+          "state": "live",
           "stage": "series",
           "scheduledAt": "2026-08-02T12:00:00+03:00",
           "bestOf": 2,
+          "interesting": true,
+          "interestReason": "Поздняя стадия матча: результат может решить одна драка",
+          "gameTimeSeconds": 2555,
+          "delaySeconds": 900,
+          "spectators": 1148,
           "score": {
-            "radiant": 0,
-            "dire": 0,
-            "radiantGoldLead": 0
+            "radiant": 39,
+            "dire": 15,
+            "radiantGoldLead": 32562
           }
         },
         {
