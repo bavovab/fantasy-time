@@ -6,30 +6,8 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-02T17:46:01Z",
-  "matches": [
-    {
-      "id": "1win-essence-2-test-8926236518",
-      "matchId": 8926236518,
-      "radiant": {
-        "name": "Vici Gaming"
-      },
-      "dire": {
-        "name": "OG"
-      },
-      "state": "live",
-      "interesting": true,
-      "interestReason": "Поздняя стадия матча: результат может решить одна драка",
-      "gameTimeSeconds": 3166,
-      "delaySeconds": 900,
-      "spectators": 1324,
-      "score": {
-        "radiant": 23,
-        "dire": 20,
-        "radiantGoldLead": 41274
-      }
-    }
-  ],
+  "updatedAt": "2026-08-02T18:01:01Z",
+  "matches": [],
   "groups": [
     {
       "id": "a",
@@ -398,27 +376,21 @@
           }
         },
         {
-          "id": "1win-essence-2-test-8926236518",
-          "matchId": 8926236518,
+          "id": "b-vici-og",
           "radiant": {
             "name": "Vici Gaming"
           },
           "dire": {
             "name": "OG"
           },
-          "state": "live",
+          "state": "scheduled",
           "stage": "series",
           "scheduledAt": "2026-08-02T18:00:00+03:00",
           "bestOf": 2,
-          "interesting": true,
-          "interestReason": "Поздняя стадия матча: результат может решить одна драка",
-          "gameTimeSeconds": 3166,
-          "delaySeconds": 900,
-          "spectators": 1324,
           "score": {
-            "radiant": 23,
-            "dire": 20,
-            "radiantGoldLead": 41274
+            "radiant": 0,
+            "dire": 0,
+            "radiantGoldLead": 0
           }
         }
       ]
