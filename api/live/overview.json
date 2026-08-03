@@ -6,7 +6,7 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-03T15:41:16Z",
+  "updatedAt": "2026-08-03T15:51:15Z",
   "matches": [
     {
       "id": "1win-essence-2-test-8927668869",
@@ -18,13 +18,13 @@
         "name": "BoomBoys"
       },
       "state": "live",
-      "gameTimeSeconds": 1281,
+      "gameTimeSeconds": 1882,
       "delaySeconds": 900,
-      "spectators": 849,
+      "spectators": 1340,
       "score": {
-        "radiant": 15,
-        "dire": 9,
-        "radiantGoldLead": 5392
+        "radiant": 20,
+        "dire": 11,
+        "radiantGoldLead": 10020
       }
     }
   ],
