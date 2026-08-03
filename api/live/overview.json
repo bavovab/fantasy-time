@@ -6,7 +6,7 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-03T17:09:55Z",
+  "updatedAt": "2026-08-03T17:19:55Z",
   "matches": [
     {
       "id": "1win-essence-2-test-8927786392",
@@ -20,13 +20,13 @@
       "state": "live",
       "interesting": true,
       "interestReason": "Поздняя стадия матча: результат может решить одна драка",
-      "gameTimeSeconds": 2413,
+      "gameTimeSeconds": 2765,
       "delaySeconds": 900,
-      "spectators": 1226,
+      "spectators": 1421,
       "score": {
-        "radiant": 21,
-        "dire": 27,
-        "radiantGoldLead": 8295
+        "radiant": 34,
+        "dire": 28,
+        "radiantGoldLead": 39344
       }
     }
   ],
