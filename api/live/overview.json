@@ -6,7 +6,7 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-03T20:21:35Z",
+  "updatedAt": "2026-08-03T21:03:55Z",
   "matches": [
     {
       "id": "1win-essence-2-test-8928118730",
@@ -18,13 +18,15 @@
         "name": "Team Liquid"
       },
       "state": "live",
-      "gameTimeSeconds": 524,
+      "interesting": true,
+      "interestReason": "Поздняя стадия матча: результат может решить одна драка",
+      "gameTimeSeconds": 2796,
       "delaySeconds": 900,
-      "spectators": 526,
+      "spectators": 1172,
       "score": {
-        "radiant": 5,
-        "dire": 1,
-        "radiantGoldLead": 1522
+        "radiant": 28,
+        "dire": 22,
+        "radiantGoldLead": 39616
       }
     }
   ],
