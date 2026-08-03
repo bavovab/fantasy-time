@@ -6,8 +6,28 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-03T14:51:55Z",
-  "matches": [],
+  "updatedAt": "2026-08-03T15:41:16Z",
+  "matches": [
+    {
+      "id": "1win-essence-2-test-8927668869",
+      "matchId": 8927668869,
+      "radiant": {
+        "name": "Team Falcons"
+      },
+      "dire": {
+        "name": "BoomBoys"
+      },
+      "state": "live",
+      "gameTimeSeconds": 1281,
+      "delaySeconds": 900,
+      "spectators": 849,
+      "score": {
+        "radiant": 15,
+        "dire": 9,
+        "radiantGoldLead": 5392
+      }
+    }
+  ],
   "groups": [
     {
       "id": "a",
