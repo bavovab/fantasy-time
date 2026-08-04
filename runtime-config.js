@@ -3,4 +3,4 @@ document.documentElement.dataset.appMode = window.DOTA_HUB_MODE;
 document.title = "Fantasy Time · TI 2026";
 
 window.DOTA_HUB_STATIC_API = true;
-window.DOTA_HUB_STATIC_RELEASE = "20260804T130815Z-15d7ac346e2b";
+window.DOTA_HUB_STATIC_RELEASE = "20260804T132415Z-ed0a89425fff";
