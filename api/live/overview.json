@@ -6,8 +6,28 @@
     "testMode": true,
     "notice": "Тестовое наблюдение за 1win Essence II. Показываются только текущие матчи команд из нашей выборки TI 2026; результаты турнира не меняют статистику TI."
   },
-  "updatedAt": "2026-08-04T13:25:15Z",
-  "matches": [],
+  "updatedAt": "2026-08-04T14:21:35Z",
+  "matches": [
+    {
+      "id": "1win-essence-2-test-8929037896",
+      "matchId": 8929037896,
+      "radiant": {
+        "name": "1w"
+      },
+      "dire": {
+        "name": "Vici Gaming"
+      },
+      "state": "live",
+      "gameTimeSeconds": 2025,
+      "delaySeconds": 900,
+      "spectators": 1225,
+      "score": {
+        "radiant": 28,
+        "dire": 10,
+        "radiantGoldLead": 23760
+      }
+    }
+  ],
   "groups": [
     {
       "id": "a",
