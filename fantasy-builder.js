@@ -349,7 +349,7 @@ function averageFantasyCalculations(calculations, match) {
   };
 }
 
-function fantasyRoleMapCalculations(candidate, slot) {
+function fantasyRoleMapCalculations(candidate, slot, title = fantasyBuilderState.title) {
   if (!candidate) return [];
   const memberMatches = candidate.members.map(member => {
     const detail = fantasyDetailForPlayer(member);
@@ -358,7 +358,7 @@ function fantasyRoleMapCalculations(candidate, slot) {
   const commonIds = [...(memberMatches[0]?.keys() || [])].filter(id => memberMatches.every(matches => matches.has(id)));
   return commonIds.map(matchId => {
     const matches = memberMatches.map(items => items.get(matchId));
-    const calculations = matches.map(match => calculateFantasyMemberMap(match, slot.emblems, fantasyBuilderState.title));
+    const calculations = matches.map(match => calculateFantasyMemberMap(match, slot.emblems, title));
     return averageFantasyCalculations(calculations, matches[0]);
   }).sort((left, right) => Number(left.match.startTime || 0) - Number(right.match.startTime || 0));
 }
@@ -408,15 +408,55 @@ function fantasyAverageProjection(records) {
   };
 }
 
-function fantasyRoleProjection(roleKey, candidate = fantasyCandidateBySlot(roleKey)) {
+function fantasyRoleProjection(roleKey, candidate = fantasyCandidateBySlot(roleKey), title = fantasyBuilderState.title) {
   const slot = fantasyBuilderState.slots[roleKey];
-  const maps = fantasyRoleMapCalculations(candidate, slot);
+  const maps = fantasyRoleMapCalculations(candidate, slot, title);
   const series = fantasySeriesCalculations(maps);
   return {
     candidate, maps, series,
     mapAverage: fantasyAverageProjection(maps),
     seriesAverage: fantasyAverageProjection(series),
   };
+}
+
+function fantasyRosterProjection(title) {
+  const mode = fantasyBuilderState.mode === "map" ? "map" : "series";
+  const projections = Object.fromEntries(Object.keys(fantasyRoleRules).map(roleKey => [
+    roleKey,
+    fantasyRoleProjection(roleKey, fantasyCandidateBySlot(roleKey), title),
+  ]));
+  const selected = Object.values(projections).map(projection => mode === "map"
+    ? { average: projection.mapAverage, records: projection.maps }
+    : { average: projection.seriesAverage, records: projection.series });
+  return {
+    mode,
+    projections,
+    recordCount: selected.reduce((sum, item) => sum + item.records.length, 0),
+    total: selected.reduce((sum, item) => sum + Number(item.average.total || 0), 0),
+    prefixPoints: selected.reduce((sum, item) => sum + Number(item.average.prefixPoints || 0), 0),
+    suffixPoints: selected.reduce((sum, item) => sum + Number(item.average.suffixPoints || 0), 0),
+  };
+}
+
+function fantasyTitleRecommendations(kind, title, projectTitle = fantasyRosterProjection) {
+  const catalog = kind === "prefix" ? fantasyTitlePrefixes : fantasyTitleSuffixes;
+  const recommendations = Object.entries(catalog).map(([key, item]) => {
+    const candidateTitle = { ...title, [kind]: key };
+    const projection = projectTitle(candidateTitle);
+    const available = item.support !== "missing" && projection.recordCount > 0;
+    return {
+      key,
+      item,
+      available,
+      points: kind === "prefix" ? projection.prefixPoints : projection.suffixPoints,
+      total: projection.total,
+      mode: projection.mode,
+    };
+  });
+  const ranked = recommendations.filter(item => item.available)
+    .sort((left, right) => right.points - left.points || right.total - left.total);
+  const bestKey = ranked[0]?.key || "";
+  return recommendations.map(item => ({ ...item, recommended: item.key === bestKey }));
 }
 
 function renderFantasyBuilder(viewState = null) {
@@ -711,6 +751,15 @@ function bindFantasyBuilderShell() {
     const mapButton = event.target.closest("[data-fantasy-open-map]");
     if (mapButton) { dialog.close(); openMatch(Number(mapButton.dataset.fantasyOpenMap)); }
   });
+  dialog?.addEventListener("change", event => {
+    const form = event.target.closest("[data-fantasy-title-form]");
+    if (!form || !event.target.matches('input[name="prefix"], input[name="suffix"]')) return;
+    const data = new FormData(form);
+    refreshFantasyTitleRecommendations(form, {
+      prefix: String(data.get("prefix")),
+      suffix: String(data.get("suffix")),
+    });
+  });
   dialog?.addEventListener("submit", event => {
     event.preventDefault();
     const form = event.target;
@@ -812,10 +861,40 @@ function openFantasyTitleEditor() {
   fantasyBuilderActiveDialog = { type: "title" };
   setFantasyDialog("Изменить титул", "Один титул для всего состава", `
     <form data-fantasy-title-form class="fantasy-title-form">
-      <fieldset><legend>Префикс</legend><div class="fantasy-title-options">${Object.entries(fantasyTitlePrefixes).map(([key, item]) => `<label><input type="radio" name="prefix" value="${key}" ${key === fantasyBuilderState.title.prefix ? "checked" : ""}><span><strong>${escapeHTML(item.label)}</strong><small>${escapeHTML(item.description)}</small></span></label>`).join("")}</div></fieldset>
-      <fieldset><legend>Суффикс</legend><div class="fantasy-title-options">${Object.entries(fantasyTitleSuffixes).map(([key, item]) => `<label class="${item.support === "missing" ? "data-missing" : ""}"><input type="radio" name="suffix" value="${key}" ${key === fantasyBuilderState.title.suffix ? "checked" : ""}><span><strong>${escapeHTML(item.label)}</strong><small>${escapeHTML(item.description)}</small>${item.support === "missing" ? `<em>${escapeHTML(item.reason)}</em>` : ""}</span></label>`).join("")}</div></fieldset>
+      <p class="fantasy-title-summary">Прогноз учитывает текущий состав, эмблемы, выбранные турниры и режим <strong>${fantasyBuilderState.mode === "series" ? "среднее за серию" : "среднее за карту"}</strong>.</p>
+      <fieldset><legend>Префикс</legend><div class="fantasy-title-options" data-fantasy-title-options="prefix">${renderFantasyTitleOptions("prefix", fantasyBuilderState.title)}</div></fieldset>
+      <fieldset><legend>Суффикс</legend><div class="fantasy-title-options" data-fantasy-title-options="suffix">${renderFantasyTitleOptions("suffix", fantasyBuilderState.title)}</div></fieldset>
       <button type="submit" class="fantasy-dialog-primary">Применить титул</button>
     </form>`, "fantasy-title-dialog");
+}
+
+function renderFantasyTitleOptions(kind, title) {
+  const selectedKey = title[kind];
+  return fantasyTitleRecommendations(kind, title).map(({ key, item, available, points, total, recommended }) => {
+    const classes = [
+      item.support === "missing" ? "data-missing" : "",
+      recommended ? "is-recommended" : "",
+    ].filter(Boolean).join(" ");
+    const forecast = available
+      ? `<span class="fantasy-title-forecast"><span><small>Добавит к составу</small><strong>${formatSignedFantasyPoints(points)}</strong></span><span><small>Итог состава</small><b>${formatPoints(total)}</b></span></span>`
+      : `<span class="fantasy-title-forecast unavailable"><strong>${item.support === "missing" ? "Точный расчёт недоступен" : "Нет матчей для расчёта"}</strong></span>`;
+    return `<label class="${classes}">
+      <input type="radio" name="${kind}" value="${key}" ${key === selectedKey ? "checked" : ""}>
+      <span>
+        <span class="fantasy-title-option-heading"><strong>${escapeHTML(item.label)}</strong>${recommended ? "<b>Лучший выбор</b>" : ""}</span>
+        <small>${escapeHTML(item.description)}</small>
+        ${forecast}
+        ${item.support === "missing" ? `<em>${escapeHTML(item.reason)}</em>` : ""}
+      </span>
+    </label>`;
+  }).join("");
+}
+
+function refreshFantasyTitleRecommendations(form, title) {
+  ["prefix", "suffix"].forEach(kind => {
+    const options = form.querySelector(`[data-fantasy-title-options="${kind}"]`);
+    if (options) options.innerHTML = renderFantasyTitleOptions(kind, title);
+  });
 }
 
 function openFantasyHistory(roleKey, mode) {
@@ -872,5 +951,6 @@ if (typeof module !== "undefined" && module.exports) {
     fantasyAverageProjection,
     fantasyTitlePrefixes,
     fantasyTitleSuffixes,
+    fantasyTitleRecommendations,
   };
 }

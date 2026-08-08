@@ -1076,6 +1076,27 @@ body.public-mode #fantasyBuilderView {
   gap: 18px;
 }
 
+.fantasy-title-dialog { width: min(1180px, calc(100vw - 28px)); }
+
+.fantasy-title-form {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+
+.fantasy-title-summary {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #493b22;
+  border-radius: 4px;
+  background: rgba(18, 15, 9, .88);
+  color: #a99b7c;
+  font-size: 12px;
+}
+
+.fantasy-title-summary strong { color: #efd27e; }
+.fantasy-title-form > .fantasy-dialog-primary { grid-column: 1 / -1; }
+
 .fantasy-editor-form fieldset,
 .fantasy-title-form fieldset {
   min-width: 0;
@@ -1141,6 +1162,56 @@ body.public-mode #fantasyBuilderView {
 .fantasy-title-options small { color: #8e8268; font-size: 9px; }
 .fantasy-title-options em { margin-top: 4px; color: #c6876f; font-size: 9px; font-style: normal; }
 .fantasy-title-options .data-missing > span { border-style: dashed; }
+
+.fantasy-title-options label > span {
+  align-content: start;
+  gap: 5px;
+  min-height: 118px;
+}
+
+.fantasy-title-options .is-recommended > span {
+  border-color: #d8b24f;
+  box-shadow: inset 0 0 0 1px rgba(255, 226, 139, .14), 0 0 14px rgba(202, 154, 48, .11);
+}
+
+.fantasy-title-option-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fantasy-title-option-heading > strong { color: #f1e7ce; font-size: 12px; }
+.fantasy-title-option-heading > b {
+  flex: none;
+  padding: 3px 5px;
+  border: 1px solid #9e792d;
+  border-radius: 3px;
+  background: #38290f;
+  color: #f5d879;
+  font-size: 8px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.fantasy-title-forecast {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 7px;
+  border-top: 1px solid #332c20;
+}
+
+.fantasy-title-forecast > span { display: grid; gap: 2px; min-width: 0; }
+.fantasy-title-forecast small { color: #8f8266; font-size: 8px; }
+.fantasy-title-forecast strong { color: #6fd59a; font-size: 13px; font-variant-numeric: tabular-nums; }
+.fantasy-title-forecast b { color: #edc963; font-size: 12px; font-variant-numeric: tabular-nums; }
+.fantasy-title-forecast.unavailable {
+  grid-template-columns: 1fr;
+  color: #c6876f;
+}
+.fantasy-title-forecast.unavailable strong { color: inherit; font-size: 11px; }
 
 .fantasy-tier-options { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 7px; }
 .fantasy-tier-options label > span { place-items: center; min-height: 56px; font-family: Georgia, serif; font-size: 18px; }
@@ -1262,6 +1333,9 @@ body.public-mode #fantasyBuilderView {
   .fantasy-picker-actions { margin-right: -10px; margin-left: -10px; }
   .fantasy-option-grid,
   .fantasy-title-options { grid-template-columns: 1fr; }
+  .fantasy-title-form { grid-template-columns: 1fr; }
+  .fantasy-title-summary,
+  .fantasy-title-form > .fantasy-dialog-primary { grid-column: 1; }
   .fantasy-tier-options { grid-template-columns: repeat(5, minmax(48px, 1fr)); overflow-x: auto; }
   .fantasy-history-list > button { grid-template-columns: minmax(0, 1fr) 90px; }
   .fantasy-history-list i { grid-column: 1; }
