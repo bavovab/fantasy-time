@@ -22,47 +22,43 @@ const fantasyTraits = {
   friendly: { label: "Дружелюбная", description: "+50%, если все три эмблемы дружелюбные." },
 };
 
-function normalizeFantasyHeroName(value) {
-  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
-}
-
-function fantasyHeroSet(values) {
-  return new Set(values.split("|").map(normalizeFantasyHeroName));
+function fantasyHeroIdSet(values) {
+  return new Set(values);
 }
 
 const fantasyTitlePrefixes = {
   none: { label: "Без префикса", bonus: 0, description: "Префикс не выбран.", heroes: new Set() },
   crimson: {
     label: "Багровый", bonus: .06, description: "+6% при игре за красного героя.",
-    heroes: fantasyHeroSet("Axe|Beastmaster|Bloodseeker|Brewmaster|Centaur Warrunner|Clockwerk|Dawnbreaker|Disruptor|Doom|Dragon Knight|Ember Spirit|Grimstroke|Huskar|Legion Commander|Lina|Lion|Lycan|Mars|Monkey King|Pangolier|Primal Beast|Queen of Pain|Shadow Fiend|Snapfire|Sven|Timbersaw|Troll Warlord|Underlord|Warlock|Windranger|Wraith King"),
+    heroIds: fantasyHeroIdSet([2, 4, 11, 14, 18, 25, 35, 37, 38, 49, 51, 61, 64, 65, 69, 77, 78, 79, 81, 87, 88, 95, 104, 106, 110, 120, 128, 129, 131, 137]),
   },
   cerulean: {
     label: "Лазурный", bonus: .11, description: "+11% при игре за синего героя.",
-    heroes: fantasyHeroSet("Abaddon|Ancient Apparition|Anti-Mage|Arc Warden|Bane|Crystal Maiden|Drow Ranger|Enigma|Faceless Void|Jakiro|Keeper of the Light|Kunkka|Lich|Luna|Mirana|Morphling|Muerta|Naga Siren|Oracle|Outworld Destroyer|Phantom Assassin|Puck|Razor|Riki|Slardar|Spirit Breaker|Storm Spirit|Templar Assassin|Tiny|Tusk|Vengeful Spirit|Visage|Winter Wyvern|Zeus"),
+    heroIds: fantasyHeroIdSet([5, 9, 10, 12, 13, 15, 17, 18, 20, 22, 31, 39, 48, 52, 59, 60, 63, 64, 68, 71, 84, 91, 92, 102, 111, 112, 113, 138, 145]),
   },
   emerald: {
     label: "Изумрудный", bonus: .06, description: "+6% при игре за зелёного героя.",
-    heroes: fantasyHeroSet("Bristleback|Broodmother|Chen|Dark Seer|Death Prophet|Earth Spirit|Enchantress|Hoodwink|Medusa|Meepo|Nature's Prophet|Necrophos|Nyx Assassin|Pugna|Rubick|Sand King|Shadow Shaman|Treant Protector|Tidehunter|Undying|Venomancer|Viper|Weaver|Windranger"),
+    heroIds: fantasyHeroIdSet([21, 29, 36, 40, 42, 44, 45, 47, 53, 58, 76, 83, 85, 86, 89, 94, 107, 108, 114, 119, 123, 138, 155]),
   },
   royal: {
     label: "Королевский", bonus: .10, description: "+10% при игре за фиолетового героя.",
-    heroes: fantasyHeroSet("Bane|Dark Seer|Dazzle|Enigma|Faceless Void|Invoker|Leshrac|Lion|Magnus|Night Stalker|Oracle|Outworld Destroyer|Puck|Queen of Pain|Riki|Shadow Demon|Spectre|Templar Assassin|Void Spirit|Witch Doctor"),
+    heroIds: fantasyHeroIdSet([1, 3, 6, 26, 28, 30, 32, 33, 41, 46, 50, 55, 67, 70, 75, 98, 102, 109, 119, 126]),
   },
   golden: {
     label: "Золотой", bonus: .08, description: "+8% при игре за жёлтого или коричневого героя.",
-    heroes: fantasyHeroSet("Bounty Hunter|Brewmaster|Bristleback|Broodmother|Chen|Clinkz|Dawnbreaker|Earthshaker|Elder Titan|Hoodwink|Keeper of the Light|Legion Commander|Lone Druid|Monkey King|Nyx Assassin|Omniknight|Pangolier|Sand King|Shadow Shaman|Snapfire|Templar Assassin|Venomancer"),
+    heroIds: fantasyHeroIdSet([7, 16, 19, 27, 34, 56, 62, 65, 66, 72, 73, 80, 83, 86, 90, 96, 97, 99, 103, 105, 110, 131, 135, 137, 155]),
   },
   elemental: {
     label: "Элементальный", bonus: .08, description: "+8% при игре за водного, огненного или ледяного героя.",
-    heroes: fantasyHeroSet("Ancient Apparition|Batrider|Crystal Maiden|Ember Spirit|Huskar|Jakiro|Kunkka|Lina|Luna|Morphling|Naga Siren|Phoenix|Slardar|Slark|Storm Spirit|Tidehunter|Tusk|Winter Wyvern"),
+    heroIds: fantasyHeroIdSet([5, 6, 10, 23, 25, 28, 29, 31, 49, 56, 59, 64, 65, 68, 69, 74, 78, 84, 89, 93, 100, 105, 106, 110, 112, 135]),
   },
   otherworldly: {
     label: "Потусторонний", bonus: .07, description: "+7% при игре за нежить, демона или духа.",
-    heroes: fantasyHeroSet("Abaddon|Death Prophet|Doom|Earth Spirit|Ember Spirit|Grimstroke|Lich|Muerta|Necrophos|Night Stalker|Pugna|Queen of Pain|Shadow Demon|Shadow Fiend|Spectre|Spirit Breaker|Storm Spirit|Undying|Vengeful Spirit|Visage|Void Spirit|Wraith King"),
+    heroIds: fantasyHeroIdSet([11, 14, 17, 20, 23, 26, 31, 36, 39, 42, 43, 45, 54, 56, 59, 67, 69, 79, 85, 106, 107, 108, 109, 121, 126, 138]),
   },
   heroic: {
     label: "Героический", bonus: .09, description: "+9% при игре за героя в маске или плаще.",
-    heroes: fantasyHeroSet("Anti-Mage|Bounty Hunter|Clinkz|Drow Ranger|Grimstroke|Juggernaut|Luna|Muerta|Oracle|Phantom Assassin|Riki|Rubick|Shadow Demon|Silencer|Sven|Templar Assassin|Terrorblade|Void Spirit"),
+    heroIds: fantasyHeroIdSet([4, 5, 6, 8, 18, 21, 26, 27, 34, 35, 37, 44, 45, 51, 53, 57, 62, 65, 72, 74, 79, 81, 86, 102, 111, 113, 114, 121, 136, 138]),
   },
 };
 
@@ -262,8 +258,7 @@ function fantasyEmblemModifiers(emblems) {
 
 function fantasyPrefixApplies(prefixKey, heroId) {
   if (prefixKey === "none") return true;
-  const name = normalizeFantasyHeroName(heroName(heroId));
-  return Boolean(name && fantasyTitlePrefixes[prefixKey]?.heroes.has(name));
+  return fantasyTitlePrefixes[prefixKey]?.heroIds?.has(Number(heroId)) || false;
 }
 
 function fantasySuffixResult(suffixKey, match) {
@@ -309,7 +304,7 @@ function calculateFantasyMemberMap(match, emblems, title) {
   const emblemsTotal = emblemBreakdown.reduce((sum, emblem) => sum + emblem.points, 0);
   const beforeTitle = base + emblemsTotal;
   const prefix = fantasyTitlePrefixes[title.prefix] || fantasyTitlePrefixes.none;
-  const prefixKnown = title.prefix === "none" || Boolean(heroName(match.heroId));
+  const prefixKnown = title.prefix === "none" || Number(match.heroId || 0) > 0;
   const prefixActive = prefixKnown && fantasyPrefixApplies(title.prefix, match.heroId);
   const prefixPoints = prefixActive ? beforeTitle * prefix.bonus : 0;
   const suffix = fantasyTitleSuffixes[title.suffix] || fantasyTitleSuffixes.none;
@@ -438,6 +433,121 @@ function fantasyRosterProjection(title) {
   };
 }
 
+function fantasyTitleEvidenceLabel(kind, key) {
+  if (kind === "prefix") return "Подходящих героев";
+  return {
+    underdog: "Поражений",
+    decisive: "Карт короче 25 минут",
+    clutch: "Решающих карт",
+    lucky: "Длительность закончилась на 8",
+  }[key] || "Срабатываний";
+}
+
+function fantasyMemberTitleAverage(roleProjection, memberIndex, field, mode) {
+  if (mode === "map") {
+    const values = roleProjection.maps.map(map => Number(map.members?.[memberIndex]?.[field] || 0));
+    return values.reduce((sum, value) => sum + value, 0) / Math.max(1, values.length);
+  }
+  const values = roleProjection.series.map(series => series.countedMaps
+    .reduce((sum, map) => sum + Number(map.members?.[memberIndex]?.[field] || 0), 0));
+  return values.reduce((sum, value) => sum + value, 0) / Math.max(1, values.length);
+}
+
+function fantasyTitleEvidence(kind, key, projection) {
+  if (!projection?.projections || key === "none") return null;
+  const pointsField = kind === "prefix" ? "prefixPoints" : "suffixPoints";
+  const knownField = kind === "prefix" ? "prefixKnown" : "suffixKnown";
+  const activeField = kind === "prefix" ? "prefixActive" : "suffixActive";
+  const heroCounts = new Map();
+  const matches = new Map();
+  const roles = [];
+  let total = 0;
+  let known = 0;
+  let hits = 0;
+
+  Object.entries(projection.projections).forEach(([roleKey, roleProjection]) => {
+    if (!roleProjection?.candidate) return;
+    const countedMapIds = new Set(roleProjection.series.flatMap(series =>
+      series.countedMaps.map(map => Number(map.match.matchId))));
+    const members = roleProjection.candidate.members.map((member, memberIndex) => ({
+      name: member.name,
+      position: Number(member.position || 0),
+      total: 0,
+      known: 0,
+      hits: 0,
+      points: fantasyMemberTitleAverage(roleProjection, memberIndex, pointsField, projection.mode),
+    }));
+
+    roleProjection.maps.forEach(map => {
+      let mapActive = false;
+      const activePlayers = [];
+      const activeHeroes = [];
+      map.members.forEach((calculation, memberIndex) => {
+        const member = members[memberIndex];
+        if (!member) return;
+        member.total += 1;
+        total += 1;
+        if (calculation[knownField]) {
+          member.known += 1;
+          known += 1;
+        }
+        if (!calculation[activeField]) return;
+        member.hits += 1;
+        hits += 1;
+        mapActive = true;
+        activePlayers.push(member.name);
+        const name = heroName(calculation.match.heroId);
+        if (kind === "prefix" && name) {
+          activeHeroes.push(name);
+          heroCounts.set(name, (heroCounts.get(name) || 0) + 1);
+        }
+      });
+      if (!mapActive) return;
+      const matchId = Number(map.match.matchId);
+      const item = matches.get(matchId) || {
+        matchId,
+        startTime: Number(map.match.startTime || 0),
+        opponentName: map.match.opponentName || "Соперник",
+        leagueName: map.match.leagueName || "Турнир",
+        roles: new Set(),
+        players: new Set(),
+        heroes: new Set(),
+        points: 0,
+        counted: false,
+      };
+      item.roles.add(fantasyRoleRules[roleKey].label);
+      activePlayers.forEach(name => item.players.add(name));
+      activeHeroes.forEach(name => item.heroes.add(name));
+      item.points += Number(map[pointsField] || 0);
+      item.counted ||= projection.mode === "map" || countedMapIds.has(matchId);
+      matches.set(matchId, item);
+    });
+
+    const roleAverage = projection.mode === "map" ? roleProjection.mapAverage : roleProjection.seriesAverage;
+    roles.push({
+      roleKey,
+      label: fantasyRoleRules[roleKey].label,
+      teamName: roleProjection.candidate.teamName,
+      points: Number(roleAverage[pointsField] || 0),
+      members,
+    });
+  });
+
+  return {
+    kind,
+    key,
+    mode: projection.mode,
+    metricLabel: fantasyTitleEvidenceLabel(kind, key),
+    total,
+    known,
+    hits,
+    roles,
+    heroes: [...heroCounts.entries()].map(([name, count]) => ({ name, count }))
+      .sort((left, right) => right.count - left.count || left.name.localeCompare(right.name, "ru")),
+    matches: [...matches.values()].sort((left, right) => right.startTime - left.startTime),
+  };
+}
+
 function fantasyTitleRecommendations(kind, title, projectTitle = fantasyRosterProjection) {
   const catalog = kind === "prefix" ? fantasyTitlePrefixes : fantasyTitleSuffixes;
   const recommendations = Object.entries(catalog).map(([key, item]) => {
@@ -451,6 +561,7 @@ function fantasyTitleRecommendations(kind, title, projectTitle = fantasyRosterPr
       points: kind === "prefix" ? projection.prefixPoints : projection.suffixPoints,
       total: projection.total,
       mode: projection.mode,
+      evidence: fantasyTitleEvidence(kind, key, projection),
     };
   });
   const ranked = recommendations.filter(item => item.available)
@@ -714,7 +825,36 @@ function bindFantasyBuilderShell() {
     }
   });
   dialog?.addEventListener("click", event => {
-    if (event.target === dialog || event.target.closest("[data-close-fantasy-dialog]")) dialog.close();
+    if (event.target === dialog || event.target.closest("[data-close-fantasy-dialog]")) {
+      dialog.close();
+      return;
+    }
+    const titleDetails = event.target.closest("[data-fantasy-title-details]");
+    if (titleDetails) {
+      const option = titleDetails.closest(".fantasy-title-option");
+      const willOpen = !option?.classList.contains("is-open");
+      dialog.querySelectorAll(".fantasy-title-option.is-open").forEach(item => {
+        item.classList.remove("is-open");
+        item.querySelector("[data-fantasy-title-details]")?.setAttribute("aria-expanded", "false");
+      });
+      option?.classList.toggle("is-open", willOpen);
+      titleDetails.setAttribute("aria-expanded", String(willOpen));
+      return;
+    }
+    const evidenceExpand = event.target.closest("[data-fantasy-evidence-expand]");
+    if (evidenceExpand) {
+      evidenceExpand.closest(".fantasy-title-evidence-matches")
+        ?.querySelectorAll("[data-fantasy-evidence-match][hidden]")
+        .forEach(button => button.removeAttribute("hidden"));
+      evidenceExpand.remove();
+      return;
+    }
+    const evidenceMatch = event.target.closest("[data-fantasy-evidence-match]");
+    if (evidenceMatch) {
+      dialog.close();
+      openMatch(Number(evidenceMatch.dataset.fantasyEvidenceMatch));
+      return;
+    }
     const playerButton = event.target.closest("[data-fantasy-pick-team]");
     if (playerButton && fantasyBuilderActiveDialog?.type === "player") {
       fantasyBuilderActiveDialog.selectedTeamSlug = playerButton.dataset.fantasyPickTeam;
@@ -870,7 +1010,7 @@ function openFantasyTitleEditor() {
 
 function renderFantasyTitleOptions(kind, title) {
   const selectedKey = title[kind];
-  return fantasyTitleRecommendations(kind, title).map(({ key, item, available, points, total, recommended }) => {
+  return fantasyTitleRecommendations(kind, title).map(({ key, item, available, points, total, recommended, evidence }) => {
     const classes = [
       item.support === "missing" ? "data-missing" : "",
       recommended ? "is-recommended" : "",
@@ -878,16 +1018,46 @@ function renderFantasyTitleOptions(kind, title) {
     const forecast = available
       ? `<span class="fantasy-title-forecast"><span><small>Добавит к составу</small><strong>${formatSignedFantasyPoints(points)}</strong></span><span><small>Итог состава</small><b>${formatPoints(total)}</b></span></span>`
       : `<span class="fantasy-title-forecast unavailable"><strong>${item.support === "missing" ? "Точный расчёт недоступен" : "Нет матчей для расчёта"}</strong></span>`;
-    return `<label class="${classes}">
-      <input type="radio" name="${kind}" value="${key}" ${key === selectedKey ? "checked" : ""}>
-      <span>
-        <span class="fantasy-title-option-heading"><strong>${escapeHTML(item.label)}</strong>${recommended ? "<b>Лучший выбор</b>" : ""}</span>
-        <small>${escapeHTML(item.description)}</small>
-        ${forecast}
-        ${item.support === "missing" ? `<em>${escapeHTML(item.reason)}</em>` : ""}
-      </span>
-    </label>`;
+    return `<div class="fantasy-title-option ${classes}">
+      <label>
+        <input type="radio" name="${kind}" value="${key}" ${key === selectedKey ? "checked" : ""}>
+        <span>
+          <span class="fantasy-title-option-heading"><strong>${escapeHTML(item.label)}</strong>${recommended ? "<b>Лучший выбор</b>" : ""}</span>
+          <small>${escapeHTML(item.description)}</small>
+          ${forecast}
+          ${item.support === "missing" ? `<em>${escapeHTML(item.reason)}</em>` : ""}
+        </span>
+      </label>
+      ${key === "none" ? "" : `<button type="button" class="fantasy-title-details-trigger" data-fantasy-title-details aria-expanded="false">Почему столько очков?</button>${renderFantasyTitleEvidence(item, evidence, available)}`}
+    </div>`;
   }).join("");
+}
+
+function renderFantasyTitleEvidence(item, evidence, available) {
+  if (!evidence) return "";
+  const checked = evidence.known || evidence.total;
+  const rate = evidence.known ? Math.round(evidence.hits / evidence.known * 100) : 0;
+  const modeNote = evidence.mode === "series"
+    ? "Условия показаны по картам, а очки рассчитаны по лучшим картам каждой серии."
+    : "Очки рассчитаны как среднее за карту.";
+  const roles = evidence.roles.map(role => `<article class="fantasy-title-evidence-role">
+    <header><span><strong>${escapeHTML(role.label)}</strong><small>${escapeHTML(role.teamName || "Команда")}</small></span><b>${formatSignedFantasyPoints(role.points)}</b></header>
+    <div>${role.members.map(member => `<p><span><strong>${escapeHTML(member.name)}</strong><small>позиция ${member.position || "?"}</small></span><span><b>${member.hits} из ${member.known || member.total}</b><small>${formatSignedFantasyPoints(member.points)}</small></span></p>`).join("")}</div>
+  </article>`).join("");
+  const heroes = evidence.kind === "prefix" && evidence.heroes.length
+    ? `<section class="fantasy-title-evidence-heroes"><h4>Герои, которые активировали префикс</h4><div>${evidence.heroes.map(hero => `<span><strong>${escapeHTML(hero.name)}</strong><b>${hero.count}</b></span>`).join("")}</div></section>`
+    : "";
+  const matches = evidence.matches.map((match, index) => `<button type="button" data-fantasy-evidence-match="${match.matchId}" ${index >= 5 ? "hidden" : ""}>
+    <span><strong>#${match.matchId} · ${[...match.roles].map(escapeHTML).join(", ")}</strong><small>${escapeHTML(match.leagueName)} · ${formatDate(match.startTime)}</small></span>
+    <span><small>${escapeHTML([...match.players].join(", "))}${match.heroes.size ? ` · ${escapeHTML([...match.heroes].join(", "))}` : ""}</small><b>${formatSignedFantasyPoints(match.points)}</b></span>
+  </button>`).join("");
+  return `<aside class="fantasy-title-evidence" role="dialog" aria-label="Расчёт: ${escapeAttribute(item.label)}">
+    <header><span><small>${escapeHTML(evidence.metricLabel)}</small><strong>${evidence.hits} из ${checked} · ${rate}%</strong></span><b>${available ? "Точный расчёт" : "Данных недостаточно"}</b></header>
+    <p class="fantasy-title-evidence-note">${escapeHTML(modeNote)}</p>
+    <section class="fantasy-title-evidence-roles">${roles}</section>
+    ${heroes}
+    <section class="fantasy-title-evidence-matches"><h4>Карты, на которых условие сработало</h4>${matches || `<p>Подходящих карт в выбранных турнирах нет.</p>`}${evidence.matches.length > 5 ? `<button type="button" data-fantasy-evidence-expand>Показать все ${evidence.matches.length}</button>` : ""}</section>
+  </aside>`;
 }
 
 function refreshFantasyTitleRecommendations(form, title) {

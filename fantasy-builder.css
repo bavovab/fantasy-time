@@ -1161,17 +1161,196 @@ body.public-mode #fantasyBuilderView {
 .fantasy-option-grid small,
 .fantasy-title-options small { color: #8e8268; font-size: 9px; }
 .fantasy-title-options em { margin-top: 4px; color: #c6876f; font-size: 9px; font-style: normal; }
-.fantasy-title-options .data-missing > span { border-style: dashed; }
+.fantasy-title-options .data-missing > label > span { border-style: dashed; }
+
+.fantasy-title-option {
+  position: relative;
+  min-width: 0;
+}
 
 .fantasy-title-options label > span {
   align-content: start;
   gap: 5px;
   min-height: 118px;
+  border-radius: 4px 4px 0 0;
 }
 
-.fantasy-title-options .is-recommended > span {
+.fantasy-title-options .is-recommended > label > span {
   border-color: #d8b24f;
   box-shadow: inset 0 0 0 1px rgba(255, 226, 139, .14), 0 0 14px rgba(202, 154, 48, .11);
+}
+
+.fantasy-title-details-trigger {
+  width: 100%;
+  min-height: 29px;
+  padding: 5px 10px;
+  border: 1px solid #3e3728;
+  border-top: 0;
+  border-radius: 0 0 4px 4px;
+  background: #100f0c;
+  color: #c9ab63;
+  font-size: 9px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.fantasy-title-details-trigger:hover,
+.fantasy-title-details-trigger:focus-visible,
+.fantasy-title-option.is-open .fantasy-title-details-trigger {
+  background: #211b10;
+  color: #ffe5a0;
+}
+
+.fantasy-title-evidence {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 6px);
+  left: 0;
+  display: none;
+  width: min(520px, calc(100vw - 56px));
+  max-height: min(560px, 70vh);
+  overflow: auto;
+  padding: 13px;
+  border: 1px solid #8f6c28;
+  border-radius: 5px;
+  background: #0d0c09;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, .72);
+  color: #d8cfba;
+}
+
+.fantasy-title-option:nth-child(even) .fantasy-title-evidence {
+  right: 0;
+  left: auto;
+}
+
+.fantasy-title-option.is-open .fantasy-title-evidence,
+.fantasy-title-option:focus-within .fantasy-title-evidence { display: block; }
+
+@media (hover: hover) {
+  .fantasy-title-option:hover .fantasy-title-evidence { display: block; }
+}
+
+.fantasy-title-evidence > header,
+.fantasy-title-evidence-role > header,
+.fantasy-title-evidence-role p,
+.fantasy-title-evidence-matches > button[data-fantasy-evidence-match] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fantasy-title-evidence > header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #342d20;
+}
+
+.fantasy-title-evidence > header span,
+.fantasy-title-evidence-role header span,
+.fantasy-title-evidence-role p > span,
+.fantasy-title-evidence-matches > button > span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.fantasy-title-evidence > header strong { color: #f5dfa0; font-size: 15px; }
+.fantasy-title-evidence > header > b {
+  flex: none;
+  color: #6fd59a;
+  font-size: 9px;
+  text-transform: uppercase;
+}
+
+.fantasy-title-evidence-note {
+  margin: 9px 0 11px;
+  color: #9e9279;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.fantasy-title-evidence-roles {
+  display: grid;
+  gap: 10px;
+}
+
+.fantasy-title-evidence-role {
+  padding: 0 0 9px;
+  border-bottom: 1px solid #2b261c;
+}
+
+.fantasy-title-evidence-role > header { margin-bottom: 5px; }
+.fantasy-title-evidence-role > header strong { color: #ead28e; font-size: 11px; }
+.fantasy-title-evidence-role > header > b,
+.fantasy-title-evidence-role p > span:last-child { color: #72d59c; text-align: right; }
+.fantasy-title-evidence-role p {
+  margin: 0;
+  padding: 4px 0;
+}
+.fantasy-title-evidence-role p + p { border-top: 1px solid rgba(62, 55, 40, .48); }
+.fantasy-title-evidence-role p strong { color: #d9d0bb; font-size: 10px; }
+
+.fantasy-title-evidence h4 {
+  margin: 12px 0 7px;
+  color: #d9bd78;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.fantasy-title-evidence-heroes > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.fantasy-title-evidence-heroes span {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px 6px;
+  border: 1px solid #373022;
+  border-radius: 3px;
+  background: #15120d;
+  font-size: 9px;
+}
+
+.fantasy-title-evidence-heroes b { color: #e2bd5d; }
+
+.fantasy-title-evidence-matches > button[data-fantasy-evidence-match] {
+  width: 100%;
+  padding: 8px 0;
+  border: 0;
+  border-top: 1px solid #2d281e;
+  background: transparent;
+  color: #d8cfba;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fantasy-title-evidence-matches > button[data-fantasy-evidence-match]:hover,
+.fantasy-title-evidence-matches > button[data-fantasy-evidence-match]:focus-visible {
+  background: #1a160e;
+  color: #fff0bd;
+}
+
+.fantasy-title-evidence-matches > button > span:last-child {
+  justify-items: end;
+  max-width: 52%;
+  text-align: right;
+}
+
+.fantasy-title-evidence-matches > button b { color: #70d69a; }
+.fantasy-title-evidence-matches > p { color: #8e8268; font-size: 10px; }
+.fantasy-title-evidence-matches > button[data-fantasy-evidence-expand] {
+  width: 100%;
+  margin-top: 7px;
+  padding: 8px;
+  border: 1px solid #665022;
+  border-radius: 3px;
+  background: #241b0e;
+  color: #e4c36d;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
 .fantasy-title-option-heading {
@@ -1333,6 +1512,15 @@ body.public-mode #fantasyBuilderView {
   .fantasy-picker-actions { margin-right: -10px; margin-left: -10px; }
   .fantasy-option-grid,
   .fantasy-title-options { grid-template-columns: 1fr; }
+  .fantasy-title-evidence,
+  .fantasy-title-option:nth-child(even) .fantasy-title-evidence {
+    position: fixed;
+    inset: 72px 12px 12px;
+    width: auto;
+    max-height: none;
+  }
+  .fantasy-title-evidence-matches > button[data-fantasy-evidence-match] { align-items: flex-start; flex-direction: column; }
+  .fantasy-title-evidence-matches > button > span:last-child { justify-items: start; max-width: none; text-align: left; }
   .fantasy-title-form { grid-template-columns: 1fr; }
   .fantasy-title-summary,
   .fantasy-title-form > .fantasy-dialog-primary { grid-column: 1; }
