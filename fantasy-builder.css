@@ -1326,6 +1326,8 @@ body.public-mode #fantasyBuilderView {
   cursor: pointer;
 }
 
+.fantasy-title-evidence-matches > button[data-fantasy-evidence-match][hidden] { display: none; }
+
 .fantasy-title-evidence-matches > button[data-fantasy-evidence-match]:hover,
 .fantasy-title-evidence-matches > button[data-fantasy-evidence-match]:focus-visible {
   background: #1a160e;
