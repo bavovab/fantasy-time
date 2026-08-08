@@ -1224,7 +1224,7 @@ body.public-mode #fantasyBuilderView {
 }
 
 .fantasy-title-option.is-open .fantasy-title-evidence,
-.fantasy-title-option:focus-within .fantasy-title-evidence { display: block; }
+.fantasy-title-details-trigger:focus-visible + .fantasy-title-evidence { display: block; }
 
 @media (hover: hover) {
   .fantasy-title-option:hover .fantasy-title-evidence { display: block; }
