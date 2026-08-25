@@ -524,6 +524,44 @@ body.public-mode .hero-logo {
   background: transparent;
 }
 
+.archive-notice {
+  display: none;
+}
+
+body.public-mode .archive-notice {
+  width: min(1380px, calc(100% - 32px));
+  margin: 18px auto 0;
+  padding: 13px 16px;
+  border: 1px solid #705a2b;
+  border-left: 3px solid #d5aa45;
+  background: #17140d;
+  color: #b9ad8e;
+  display: flex;
+  align-items: center;
+  gap: 10px 18px;
+  line-height: 1.45;
+}
+
+body.public-mode .archive-notice strong {
+  flex: 0 0 auto;
+  color: #f0ca68;
+  font-size: 14px;
+}
+
+body.public-mode .archive-notice span {
+  min-width: 0;
+  flex: 1 1 auto;
+  font-size: 13px;
+}
+
+body.public-mode .archive-notice a {
+  flex: 0 0 auto;
+  color: #e3c36f;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 body.public-mode .public-footer {
   border-top-color: #3d3523;
   color: #8e8265;
@@ -769,6 +807,12 @@ body.public-mode .profile-emblem-recommendations > a {
 
   body.public-mode .public-footer-links {
     justify-content: flex-start;
+  }
+
+  body.public-mode .archive-notice {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
   }
 
   .legal-page {
