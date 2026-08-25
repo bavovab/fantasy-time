@@ -1,0 +1,6 @@
+data/
+archive/
+*.exe
+*.bat
+*.log
+.git/
